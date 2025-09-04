@@ -3,6 +3,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { pool, ensureSchema } from "@/lib/db";
 import {
   allowedImageTypes,
@@ -52,6 +53,8 @@ export async function createSchool(formData: FormData): Promise<CreateSchoolResu
 
     const insertId = (result as any).insertId ?? 0;
     revalidatePath("/showSchools");
+    redirect("/showSchools");
+
     return { ok: true, id: insertId };
   } catch (e: any) {
     return { ok: false, error: e?.message ?? "Unexpected error." };
@@ -66,8 +69,7 @@ export type SchoolCardRow = {
   image: string;
 };
 
-export async function listSchools(limit = 48, offset = 0) {
-  await ensureSchema(); // ensure table exists
+export async function listSchools(limit = 48, offset = 0): Promise<SchoolCardRow[]> {
   const [rows] = await pool.query(
     `SELECT id, name, address, city, image
      FROM schools
