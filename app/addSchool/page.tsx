@@ -17,7 +17,6 @@ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const inputClass =
   "rounded-xl border border-gray-300/70 bg-white/80 px-3.5 py-2.5 text-gray-900 placeholder:text-gray-400 shadow-sm hover:border-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition";
 
-
 export default function AddSchoolForm() {
   const [serverMsg, setServerMsg] = useState("");
   const [isPending, setIsPending] = useState(false);
