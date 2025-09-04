@@ -1,3 +1,4 @@
+import "./globals.css";
 export const metadata = {
   title: "Schools Admin",
   description: "Add and browse schools"

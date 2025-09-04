@@ -3,7 +3,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { revalidatePath } from "next/cache";
-import { pool } from "@/lib/db";
+import { pool, ensureSchema } from "@/lib/db";
 import {
   allowedImageTypes,
   MAX_IMAGE_BYTES,
@@ -66,7 +66,8 @@ export type SchoolCardRow = {
   image: string;
 };
 
-export async function listSchools(limit = 48, offset = 0): Promise<SchoolCardRow[]> {
+export async function listSchools(limit = 48, offset = 0) {
+  await ensureSchema(); // ensure table exists
   const [rows] = await pool.query(
     `SELECT id, name, address, city, image
      FROM schools
